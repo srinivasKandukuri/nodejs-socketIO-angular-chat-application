@@ -1,0 +1,75 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <title>Socket.IO chat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../angular-app/app.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  </head>
+  <body ng-controller="mainController">
+        <div ng-if="!isLogged">
+            <div class="centered-form">
+                <div class="centered-form__form">
+                  
+                        <div class="form-field">
+                            <h3>Join a chat</h3>
+                        </div>
+                        <div class="form-field">
+                            <label>Display name</label>
+                            <input type="text" ng-model="username" />
+                            <label ng-if="error_user">user name already exist</label>
+                            
+                        </div>
+                        <div class="form-field">
+                            <label>Room name</label>
+                            <select name="room" ng-model='room'>
+                                <option>home</option>
+                                <option>office</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <button id="joinBtn" ng-click="joinRoom(username,room)">Join</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div ng-if="isLogged" class="chat">
+            <div class="chat__sidebar">
+                <h3>People</h3>
+                <div id="users">
+                    <ul>
+                        <li ng-repeat="user in users">{{user}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="chat__main">
+                <div class="chat_header">
+                    <p class="room_name" id="roomName"></p>
+                    <div class="typing_user" id="typingUserName"></div>
+                </div>
+                <ol id="message-list" class="chat__messages"></ol>
+                <div class="chat__footer">
+                    <form id="message-form">
+                        <input autofocus autocomplete="off" id="messageInputBox"
+                            name="message" type="text" placeholder="type your message" ng-model="message"
+                            
+                        />
+                        <a class="fileUpload"><i class="fas fa-paperclip"></i></a>
+                        <input type="file" style="display:none" accept="image/jpeg,image/png,image/jpg"/>
+                        <button ng-click="send(message)">Send</button>
+                    </form>
+                    <button id="location">Send Location</button>
+                </div>
+            </div>
+
+        </div>
+
+
+  </body>
+</html>
